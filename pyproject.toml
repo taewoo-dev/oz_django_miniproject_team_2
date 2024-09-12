@@ -8,7 +8,56 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "3.12"
 django = "^5.1.1"
+psycopg2 = "^2.9.9"
+django-restframework = "^0.0.1"
+djangorestframework-simplejwt = "^5.3.1"
+requests = "^2.32.3"
+drf-yasg = "^1.21.7"
+python-dotenv = "^1.0.1"
 
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+python_version = "3.10.4"
+strict = true
+
+[[tool.mypy.overrides]]
+module = "*.migrations.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "manage"
+ignore_errors = true
+
+[tool.django-stubs]
+django_settings_module = "config.settings"
+
+[tool.coverage.report]
+# 테스트 80퍼 이상이면 통과
+fail_under = 80
+
+[tool.coverage.run]
+# 테스트 제외
+omit = [
+  ".mypy_cache/**/*",
+  "*/migrations/*",
+  "*/*test*.py",
+  "manage.py",
+]
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+isort = "^5.13.2"
+mypy = "^1.11.2"
+django-stubs = "^5.0.4"
+coverage = "^7.6.1"
+django-extensions = "^3.2.3"
+ipython = "^8.27.0"
 
 [build-system]
 requires = ["poetry-core"]
