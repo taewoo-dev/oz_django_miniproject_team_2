@@ -23,7 +23,7 @@ profile = "black"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
-python_version = "3.10.4"
+python_version = "3.12"
 strict = true
 
 [[tool.mypy.overrides]]

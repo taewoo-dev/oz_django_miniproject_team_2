@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "oz_django",  # 생성한 데이터베이스 이름
-        "USER": "gimtaeu",  # 생성한 PostgreSQL 사용자 이름
+        "USER": "hyoyoung",  # 생성한 PostgreSQL 사용자 이름
         "PASSWORD": "1234",  # PostgreSQL 사용자 비밀번호
         "HOST": "localhost",  # 로컬에서 사용할 경우
         "PORT": "5432",  # PostgreSQL 기본 포트
@@ -123,3 +124,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "users.User"
