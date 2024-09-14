@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users",
     "accounts",
+    "transaction_historys",
 ]
 
 MIDDLEWARE = [

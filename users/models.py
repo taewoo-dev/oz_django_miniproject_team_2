@@ -3,7 +3,7 @@ from typing import Any, Optional
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.core.mail import send_mail
+
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -74,10 +74,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str:
         return self.email
-
-    # def email_user(self, subject: str, message: str, from_email: str=None, **kwargs) ->None:
-    #     """Send an email to this user."""
-    #     send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
 #
