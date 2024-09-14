@@ -24,8 +24,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
           POSTGRES_DB: ${{ secrets.PG_NAME }}
         # 옵션으로 postgres의 연결 상태를 확인. 10초 단위로 5번 재시도. 5초간 기다림.
-        options: >-
-          --health-cmd pg_isready
+        options:
+          --health-cmd pg_isready -h db -U ${{ secrets.PG_USER }}
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
