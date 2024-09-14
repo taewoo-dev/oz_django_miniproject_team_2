@@ -3,7 +3,6 @@ from typing import Any, Optional
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.validators import UnicodeUsernameValidator
-
 from django.core.validators import RegexValidator
 from django.db import models
 
