@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "users",
     "accounts",
     "transaction_historys",
+    "taewoo_apps",
 ]
 
 MIDDLEWARE = [
