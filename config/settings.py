@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -34,19 +35,27 @@ ALLOWED_HOSTS: list[str] = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+OWN_APPS = [
     "users",
     "accounts",
     "transaction_historys",
+    "core",
     "taewoo_apps",
 ]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+]
+INSTALLED_APPS = DJANGO_APPS + OWN_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -134,3 +143,18 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
+
+REST_FRAMEWORK = {"DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",)}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # AT유효시간
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=60),  # RT유효시간
+    "ROTATE_REFRESH_TOKENS": True,  # Refresh Token 재발급 시 새로운 Refresh Token도 발급
+    "BLACKLIST_AFTER_ROTATION": True,  # 재발급 시 기본 토큰은 블랙리스트에 등록
+    "SIGNING_KEY": os.getenv("JWT_SIGNING_KEY", "default-secret-key"),  # .env에서 비밀 키 불러오기
+    "ALGORITHM": "HS256",  # 토큰 서명 알고리즘
+    "AUTH_HEADER_TYPES": ("Bearer",),  # 인증헤더유형. 보통 Bearer로 설정
+    # "TOKEN_OBTAIN_SERIALIZER": "users.serializers.MyTokenObtainPairSerializer", # 사용자 정의 토큰 생성 시리얼라이저
+}
+# 개발환경에서 실제 이메일 발송하지 않고 콘솔에 출력하도록 설정
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

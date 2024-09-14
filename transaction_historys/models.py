@@ -1,9 +1,10 @@
 from django.db import models
 
 from accounts.models import Account
+from core.models import BaseModel
 
 
-class TransactionHistory(models.Model):
+class TransactionHistory(BaseModel):
     TRANSACTION_TYPE_CHOICES = [
         ("deposit", "Deposit"),
         ("withdrawal", "Withdrawal"),

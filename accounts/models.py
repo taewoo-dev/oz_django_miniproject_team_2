@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
+from core.models import BaseModel
+
 User = get_user_model()
 
 
-class Account(models.Model):
+class Account(BaseModel):
 
     BANK_CODE_CHOICES = [
         ("088", "신한은행"),
