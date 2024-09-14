@@ -8,23 +8,20 @@ from users.models import User
 class AccountModelTestCase(TestCase):
     def setUp(self) -> None:
         # Given
-        self.email = "test@example.com"
-        self.password = "test_password!!"
-
-        self.user_data = {
-            "nickname": "test_nickname",
-            "name": "test_name",
-            "phone_number": "test_phone_number",
-        }
-
-        self.user = User.objects.create_user(self.email, self.password, **self.user_data)
+        self.user = User.objects.create_user(
+            email="test@example.com",
+            password="test_password",
+            nickname="test_nickname",
+            name="test_name",
+            phone_number="010-1234-5678",
+        )
 
         self.account_data = {
             "user": self.user,
             "account_number": "12345678901234567890",
-            "bank_code": "088",  # 신한은행 코드
+            "bank_code": "088",
             "account_type": "예금",
-            "balance": 1000000,  # 잔액
+            "balance": 1000000,
         }
 
     def test_create_account(self) -> None:
@@ -41,7 +38,7 @@ class AccountModelTestCase(TestCase):
     def test_account_str_representation(self) -> None:
         # When
         account = Account.objects.create(**self.account_data)
-        excepted_str = f"{self.account_data['bank_code']} - {self.account_data['account_number']}"
+        excepted_str = f"{account.bank_code} - {account.account_number}"
         # Then
         self.assertEqual(str(account), excepted_str)
 
