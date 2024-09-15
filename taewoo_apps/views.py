@@ -1,7 +1,7 @@
+from typing import Any
+
 from django.contrib.auth import login, logout
-
-from django.core.signing import SignatureExpired, BadSignature
-
+from django.core.signing import BadSignature, SignatureExpired
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -9,21 +9,21 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import User
-from taewoo_apps.serializers import UserRegistrationSerializer, UserLoginSerializer
+from taewoo_apps.serializers import UserLoginSerializer, UserRegistrationSerializer
 from taewoo_apps.services.email_service import EmailService
 from taewoo_apps.services.token_service import TokenService
 from taewoo_apps.services.user_service import UserService
+from users.models import User
 
 
 # 회원가입 API
-class UserRegistrationAPIView(GenericAPIView):
+class UserRegistrationAPIView(GenericAPIView):  # type: ignore
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
     email_service = EmailService()
     user_service = UserService()
 
-    def post(self, request: Request, *args, **kwargs) -> Response:
+    def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
@@ -56,7 +56,7 @@ class VerifyEmailAPIView(APIView):
     email_service = EmailService()
     user_service = UserService()
 
-    def get(self, request: Request, *args, **kwargs) -> Response:
+    def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         token = request.GET.get("token", "")
 
         try:
@@ -73,12 +73,12 @@ class VerifyEmailAPIView(APIView):
 
 
 # 로그인 API
-class UserLoginAPIView(GenericAPIView):
+class UserLoginAPIView(GenericAPIView):  # type: ignore
     serializer_class = UserLoginSerializer
     permission_classes = [AllowAny]
     token_service = TokenService()
 
-    def post(self, request: Request, *args, **kwargs) -> Response:
+    def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
@@ -100,10 +100,10 @@ class UserLoginAPIView(GenericAPIView):
 
 
 # 로그아웃 API
-class UserLogoutAPIView(GenericAPIView):
+class UserLogoutAPIView(GenericAPIView):  # type: ignore
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
 
         refresh_token = request.data.get("refresh")
 

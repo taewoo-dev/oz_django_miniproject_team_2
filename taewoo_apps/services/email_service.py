@@ -27,5 +27,5 @@ class EmailService:
 
     @staticmethod
     def send_email(subject: str, message: str, to_email: str) -> None:
-        to_email = to_email if isinstance(to_email, list) else [to_email]
-        send_mail(subject, message, settings.EMAIL_HOST_USER, to_email)
+        email = to_email if isinstance(to_email, list) else [to_email]
+        send_mail(subject, message, settings.EMAIL_HOST_USER, email)

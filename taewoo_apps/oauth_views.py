@@ -1,5 +1,6 @@
-from django.contrib.auth import login
+from typing import Any
 
+from django.contrib.auth import login
 from django.views.generic import RedirectView
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -8,9 +9,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from taewoo_apps.oauth_serializer import (
-    NaverCallBackSerializer,
-    KakaoCallBackSerializer,
     GoogleCallBackSerializer,
+    KakaoCallBackSerializer,
+    NaverCallBackSerializer,
 )
 from taewoo_apps.services.google_social_login_service import GoogleSocialLoginService
 from taewoo_apps.services.kakao_social_login_service import KakaoSocialLoginService
@@ -22,18 +23,18 @@ from taewoo_apps.services.user_service import UserService
 class NaverLoginRedirectView(RedirectView):
     social_service = NaverSocialLoginService()
 
-    def get_redirect_url(self, *args, **kwargs) -> str:
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
         return self.social_service.generate_login_url()
 
 
 # NaverCallBackAPIView 로그인 and 회원가입
-class NaverCallBackView(GenericAPIView):
+class NaverCallBackView(GenericAPIView):  # type: ignore
     serializer_class = NaverCallBackSerializer
     permission_classes = [AllowAny]
     social_service = NaverSocialLoginService()
     user_service = UserService()
 
-    def get(self, request: Request, *args, **kwargs) -> Response:
+    def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
@@ -45,7 +46,7 @@ class NaverCallBackView(GenericAPIView):
         access_token = self.social_service.get_access_token(code, state)
         profile_response = self.social_service.get_profile_json(access_token)
         profile_data = profile_response.get("response")
-        email = profile_data.get("email")
+        email = profile_data.get("email")  # type: ignore
 
         user = self.user_service.get_or_create_social_user_by_email(email)
 
@@ -63,18 +64,18 @@ class NaverCallBackView(GenericAPIView):
 class KakaoLoginRedirectView(RedirectView):
     social_service = KakaoSocialLoginService()
 
-    def get_redirect_url(self, *args, **kwargs) -> str:
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
         return self.social_service.generate_login_url()
 
 
 # KakaoCallBackAPIView 로그인 and 회원가입
-class KakaoCallBackView(GenericAPIView):
+class KakaoCallBackView(GenericAPIView):  # type: ignore
     serializer_class = KakaoCallBackSerializer
     permission_classes = [AllowAny]
     social_service = KakaoSocialLoginService()
     user_service = UserService()
 
-    def get(self, request: Request, *args, **kwargs) -> Response:
+    def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
@@ -84,7 +85,7 @@ class KakaoCallBackView(GenericAPIView):
         access_token = self.social_service.get_access_token(code)
         profile_response = self.social_service.get_profile_json(access_token)
         user_data = profile_response.get("kakao_account")
-        email = user_data.get("email")
+        email = user_data.get("email")  # type: ignore
 
         user = self.user_service.get_or_create_social_user_by_email(email)
 
@@ -102,18 +103,18 @@ class KakaoCallBackView(GenericAPIView):
 class GoogleLoginRedirectView(RedirectView):
     social_service = GoogleSocialLoginService()
 
-    def get_redirect_url(self, *args, **kwargs) -> str:
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
         return self.social_service.generate_login_url()
 
 
 # GoogleCallBackAPIView 로그인 and 회원가입
-class GoogleCallBackView(GenericAPIView):
+class GoogleCallBackView(GenericAPIView):  # type: ignore
     serializer_class = GoogleCallBackSerializer
     permission_classes = [AllowAny]
     social_service = GoogleSocialLoginService()
     user_service = UserService()
 
-    def get(self, request: Request, *args, **kwargs) -> Response:
+    def get(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         serializer = self.get_serializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
 
@@ -124,7 +125,7 @@ class GoogleCallBackView(GenericAPIView):
         profile_response = self.social_service.get_profile_json(access_token)
         email = profile_response.get("email")
 
-        user = self.user_service.get_or_create_social_user_by_email(email)
+        user = self.user_service.get_or_create_social_user_by_email(email)  # type: ignore
 
         if user:
             login(request, user)

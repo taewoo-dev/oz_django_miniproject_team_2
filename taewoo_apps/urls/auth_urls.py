@@ -1,15 +1,15 @@
-from django.urls import path, include
+from django.urls import include, path
 
 from taewoo_apps.views import (
-    UserRegistrationAPIView,
     PasswordChangeAPIView,
     PasswordResetAPIView,
+    UserDeactivationAPIView,
     UserDetailAPIView,
     UserListAPIView,
-    UserDeactivationAPIView,
-    UserTokenAPIView,
-    UserLogoutAPIView,
     UserLoginAPIView,
+    UserLogoutAPIView,
+    UserRegistrationAPIView,
+    UserTokenAPIView,
     VerifyEmailAPIView,
 )
 

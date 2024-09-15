@@ -1,14 +1,16 @@
+from typing import Any
+
 from django.core import signing
 from rest_framework import serializers
 
-from taewoo_apps.constants import KAKAO_STATE, NAVER_STATE, GOOGLE_STATE
+from taewoo_apps.constants import GOOGLE_STATE, KAKAO_STATE, NAVER_STATE
 
 
-class SocialCallBackSerializer(serializers.Serializer):
+class SocialCallBackSerializer(serializers.Serializer[Any]):
     code = serializers.CharField(required=True)
     state = serializers.CharField(required=True)
 
-    def get_expected_state(self) -> str:
+    def get_expected_state(self) -> str:  # type: ignore
         """
         social service에 맞는 state 설정
         """

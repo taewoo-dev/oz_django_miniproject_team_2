@@ -19,7 +19,7 @@ class EmailVerificationView(GenericAPIView):  # type: ignore
         token = request.query_params.get("token")
 
         try:
-            access_token = AccessToken(token)
+            access_token = AccessToken(token)  # type: ignore
             user_id = access_token["user_id"]
             user = User.objects.get(id=user_id)
 

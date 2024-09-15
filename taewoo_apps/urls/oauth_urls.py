@@ -1,12 +1,12 @@
-from django.urls import path, include
+from django.urls import include, path
 
 from taewoo_apps.oauth_views import (
-    NaverLoginRedirectView,
-    NaverCallBackView,
-    KakaoLoginRedirectView,
-    KakaoCallBackView,
-    GoogleLoginRedirectView,
     GoogleCallBackView,
+    GoogleLoginRedirectView,
+    KakaoCallBackView,
+    KakaoLoginRedirectView,
+    NaverCallBackView,
+    NaverLoginRedirectView,
 )
 
 urlpatterns = []

@@ -1,15 +1,13 @@
 from typing import Optional
 
-from accounts.models import User
+from users.models import User
 
 
 class UserService:
 
     @staticmethod
     def create_common_user_by_email(email: str, nickname: str, password: str) -> User:
-        return User.objects.create_user(
-            email=email, nickname=nickname, password=password
-        )
+        return User.objects.create_user(email=email, nickname=nickname, password=password)
 
     @staticmethod
     def activate_user(user: User) -> None:

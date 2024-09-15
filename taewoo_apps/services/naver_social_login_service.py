@@ -1,39 +1,44 @@
+from typing import Optional
+
 import requests
 from django.conf import settings
 
 from taewoo_apps.constants import (
     NAVER_CALLBACK_URL,
-    NAVER_STATE,
-    NAVER_SCOPE,
     NAVER_LOGIN_URL,
-    NAVER_TOKEN_URL,
     NAVER_PROFILE_URL,
+    NAVER_SCOPE,
+    NAVER_STATE,
+    NAVER_TOKEN_URL,
 )
 from taewoo_apps.services.social_login_service import SocialLoginService
 
 
 class NaverSocialLoginService(SocialLoginService):
 
-    _client_id: str = settings.NAVER_CLIENT_ID
-    _secret_id: str = settings.NAVER_SECRET
-    _callback_url: str = NAVER_CALLBACK_URL
-    _state: str = NAVER_STATE
-    _scope: str = NAVER_SCOPE
-    _login_url: str = NAVER_LOGIN_URL
-    _token_url: str = NAVER_TOKEN_URL
-    _profile_url: str = NAVER_PROFILE_URL
+    _client_id: Optional[str] = settings.NAVER_CLIENT_ID
+    _secret_id: Optional[str] = settings.NAVER_SECRET
+    _callback_url: Optional[str] = NAVER_CALLBACK_URL
+    _state: Optional[str] = NAVER_STATE
+    _scope: Optional[str] = NAVER_SCOPE
+    _login_url: Optional[str] = NAVER_LOGIN_URL
+    _token_url: Optional[str] = NAVER_TOKEN_URL
+    _profile_url: Optional[str] = NAVER_PROFILE_URL
 
-    def get_access_token(self, code: str, state: str) -> str:
-
+    def get_access_token(self, code: str, state: str) -> str:  # type: ignore
         params = self._generate_access_token_payload(code, state)
 
-        response = requests.get(NAVER_TOKEN_URL, params=params)
-
+        response = requests.get(self._token_url or "", params=params)
         token_response = response.json()
 
-        return token_response.get("access_token")
+        access_token = token_response.get("access_token")
 
-    def _generate_access_token_payload(self, code: str, state: str) -> dict:
+        if not access_token:
+            raise ValueError("Access token not found in the response.")
+
+        return access_token  # type: ignore
+
+    def _generate_access_token_payload(self, code: str, state: str) -> dict:  # type: ignore
         payload = {
             "grant_type": "authorization_code",
             "client_id": self._client_id,

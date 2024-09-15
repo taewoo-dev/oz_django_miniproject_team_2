@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -172,12 +172,13 @@ REST_FRAMEWORK = {
 # jwt token settings
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
-    "SIGNING_KEY": "SECRET",
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # AT유효시간
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=60),  # RT유효시간
+    "ROTATE_REFRESH_TOKENS": True,  # Refresh Token 재발급 시 새로운 Refresh Token도 발급
+    "BLACKLIST_AFTER_ROTATION": True,  # 재발급 시 기본 토큰은 블랙리스트에 등록
+    "SIGNING_KEY": os.getenv("JWT_SIGNING_KEY", "default-secret-key"),  # .env에서 비밀 키 불러오기
     "ALGORITHM": "HS256",
     "AUTH_HEADER_TYPES": ("Bearer",),
-    "BLACKLIST_AFTER_ROTATION": True,
 }
 
 # Email settings

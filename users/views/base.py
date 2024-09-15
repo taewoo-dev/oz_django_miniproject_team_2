@@ -48,7 +48,7 @@ class LogoutAPIView(GenericAPIView):  # type: ignore
     def post(self, request: Request) -> Response:
         try:
             refresh_token = request.COOKIES.get("refresh_token")
-            token = RefreshToken(refresh_token)
+            token = RefreshToken(refresh_token)  # type: ignore
             token.blacklist()
 
             return Response(status=status.HTTP_205_RESET_CONTENT)
