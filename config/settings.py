@@ -26,7 +26,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure--ni-ja8=#m3ykk#rtg176___3b2epdd%cd6d++#9x9uj_d$fw#"
+SECRET_KEY = "django-insecure-ymr=3u3(zk*7e098o!y@m($@q*kks6$^zi2&guz!tl*uwi-1%n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,11 +43,11 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
+
 OWN_APPS = [
     "users",
     "accounts",
     "transaction_historys",
-    "core",
     "taewoo_apps",
 ]
 THIRD_PARTY_APPS = [
@@ -56,6 +56,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_simplejwt.token_blacklist",
 ]
 INSTALLED_APPS = DJANGO_APPS + OWN_APPS + THIRD_PARTY_APPS
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -142,9 +143,33 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Custom User Model
 AUTH_USER_MODEL = "users.User"
 
-REST_FRAMEWORK = {"DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",)}
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"],
+    # renderer settings
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    # parser settings
+    # "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
+    # paginator settings
+    # "PAGE_SIZE": 10,
+    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    # simple jwt settings
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
+# jwt token settings
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),  # AT유효시간
@@ -152,9 +177,24 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,  # Refresh Token 재발급 시 새로운 Refresh Token도 발급
     "BLACKLIST_AFTER_ROTATION": True,  # 재발급 시 기본 토큰은 블랙리스트에 등록
     "SIGNING_KEY": os.getenv("JWT_SIGNING_KEY", "default-secret-key"),  # .env에서 비밀 키 불러오기
-    "ALGORITHM": "HS256",  # 토큰 서명 알고리즘
-    "AUTH_HEADER_TYPES": ("Bearer",),  # 인증헤더유형. 보통 Bearer로 설정
-    # "TOKEN_OBTAIN_SERIALIZER": "users.serializers.MyTokenObtainPairSerializer", # 사용자 정의 토큰 생성 시리얼라이저
+    "ALGORITHM": "HS256",
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
-# 개발환경에서 실제 이메일 발송하지 않고 콘솔에 출력하도록 설정
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Email settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.naver.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv("EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("PASSWORD")
+
+# Oauth settings
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
+NAVER_SECRET = os.getenv("NAVER_CLIENT_SECRET")
+
+KAKAO_CLIENT_ID = os.getenv("KAKAO_CLIENT_ID")
+KAKAO_SECRET = os.getenv("KAKAO_CLIENT_SECRET")
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")

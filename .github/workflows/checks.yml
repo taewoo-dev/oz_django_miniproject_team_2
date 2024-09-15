@@ -24,8 +24,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.PG_PASSWORD }}
           POSTGRES_DB: ${{ secrets.PG_NAME }}
         # 옵션으로 postgres의 연결 상태를 확인. 10초 단위로 5번 재시도. 5초간 기다림.
-        options:
-          --health-cmd pg_isready -h db -U ${{ secrets.PG_USER }}
+        options: >-
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -40,6 +40,13 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
+
+        # 환경 변수를 추가
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
 
       # Poetry를 설치합니다.
       - name: Install Poetry

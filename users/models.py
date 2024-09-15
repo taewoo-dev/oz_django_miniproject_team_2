@@ -1,34 +1,13 @@
-from typing import Any, Optional
+from typing import Optional
 
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator
 from django.db import models
 
 from core.models import BaseModel
-
-
-# authenticate -> api
-class CustomUserManager(BaseUserManager["User"]):
-    # **extra_fields는 사용자 모델에 있는 다른 필드들을 처리하는 역할을 함.
-    def create_user(self, email: str, password: Optional[str] = None, **extra_fields: Any) -> "User":
-        if not email:
-            raise ValueError("이메일 주소를 입력해야 합니다.")
-        if password is None:
-            raise ValueError("비밀번호를 반드시 설정해야 합니다.")
-
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)  # 해시화
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email: str, password: Optional[str] = None, **extra_fields: Any) -> "User":
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-
-        return self.create_user(email, password, **extra_fields)
+from users.managers import CustomUserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
@@ -44,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         max_length=100,
         unique=True,
         blank=True,
+        null=True,
         help_text=("문자, 숫자, 특수문자( @/./+/-/_ )를 이용해 닉네임을 만들어주세요."),
         validators=[nickname_validator],
         error_messages={
@@ -54,6 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     phone_number = models.CharField(
         max_length=20,
         unique=True,
+        blank=True,
+        null=True,
         validators=[phone_number_validator],
     )
     is_staff = models.BooleanField(
@@ -76,3 +58,10 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     def __str__(self) -> str:
         return self.email
+
+    @classmethod
+    def get_user_by_email(cls, email: str) -> Optional["User"]:
+        try:
+            return cls.objects.get(email=email)
+        except cls.DoesNotExist:
+            return None
