@@ -6,6 +6,8 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator
 from django.db import models
 
+from core.models import BaseModel
+
 
 # authenticate -> api
 class CustomUserManager(BaseUserManager["User"]):
@@ -29,7 +31,7 @@ class CustomUserManager(BaseUserManager["User"]):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     email = models.EmailField(("email address"), unique=True)
 
     nickname_validator = UnicodeUsernameValidator()
@@ -41,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("nickname"),
         max_length=100,
         unique=True,
+        blank=True,
         help_text=("문자, 숫자, 특수문자( @/./+/-/_ )를 이용해 닉네임을 만들어주세요."),
         validators=[nickname_validator],
         error_messages={
