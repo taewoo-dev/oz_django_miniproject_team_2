@@ -23,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         max_length=100,
         unique=True,
         blank=True,
+        null=True,
         help_text=("문자, 숫자, 특수문자( @/./+/-/_ )를 이용해 닉네임을 만들어주세요."),
         validators=[nickname_validator],
         error_messages={
@@ -33,6 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     phone_number = models.CharField(
         max_length=20,
         unique=True,
+        blank=True,
+        null=True,
         validators=[phone_number_validator],
     )
     is_staff = models.BooleanField(
