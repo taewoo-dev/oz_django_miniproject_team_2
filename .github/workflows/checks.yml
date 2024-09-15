@@ -41,6 +41,13 @@ jobs:
         with:
           python-version: '3.12'
 
+        # 환경 변수를 추가
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
       # Poetry를 설치합니다.
       - name: Install Poetry
         run: |
