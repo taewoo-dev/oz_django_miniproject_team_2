@@ -13,10 +13,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer[User]):
 
     class Meta:
         model = User
-        fields = ["email", "nickname", "password", "password2"]
+        fields = ["email", "nickname", "password", "password2", "phone_number"]
 
     def validate_email(self, email: str) -> str:
-        if User.objects.filter(email=email).exists():
+        if User.get_user_by_email(email=email):
             raise serializers.ValidationError("This email is already registered.")
         return email
 

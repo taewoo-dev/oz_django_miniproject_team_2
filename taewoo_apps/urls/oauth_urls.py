@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from taewoo_apps.oauth_views import (
+from taewoo_apps.views.oauth_views import (
     GoogleCallBackView,
     GoogleLoginRedirectView,
     KakaoCallBackView,

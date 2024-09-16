@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "drf_yasg",
 ]
 INSTALLED_APPS = DJANGO_APPS + OWN_APPS + THIRD_PARTY_APPS
 
@@ -155,8 +156,8 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ),
-    # parser settings
-    # "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
+    # 커스텀 예외처리 setting
+    "EXCEPTION_HANDLER": "core.utils.exexception_handler.custom_exception_handler",
     # paginator settings
     # "PAGE_SIZE": 10,
     # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",

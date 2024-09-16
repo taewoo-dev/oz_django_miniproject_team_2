@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from taewoo_apps.oauth_serializer import (
+from taewoo_apps.serializers.oauth_serializer import (
     GoogleCallBackSerializer,
     KakaoCallBackSerializer,
     NaverCallBackSerializer,

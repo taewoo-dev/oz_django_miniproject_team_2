@@ -9,7 +9,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from taewoo_apps.serializers import UserLoginSerializer, UserRegistrationSerializer
+from taewoo_apps.serializers.auth_serializers import UserLoginSerializer, UserRegistrationSerializer
 from taewoo_apps.services.email_service import EmailService
 from taewoo_apps.services.token_service import TokenService
 from taewoo_apps.services.user_service import UserService
@@ -33,6 +33,7 @@ class UserRegistrationAPIView(GenericAPIView):  # type: ignore
             email=validated_data["email"],
             nickname=validated_data["nickname"],
             password=validated_data["password"],
+            phone_number=validated_data["phone_number"],
         )
 
         email = validated_data.get("email")
@@ -43,7 +44,6 @@ class UserRegistrationAPIView(GenericAPIView):  # type: ignore
 
         data = {
             "success": True,
-            "nickname": validated_data["nickname"],
             "message": "User registered successfully.",
         }
 
