@@ -26,7 +26,7 @@ class UserRegistrationAPITest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, response_data)
 
-    def test_password_mismatch(self):
+    def test_password_mismatch(self) -> None:
         # Given
         invalid_data = self.user_data.copy()
         invalid_data["password2"] = "test_password22"

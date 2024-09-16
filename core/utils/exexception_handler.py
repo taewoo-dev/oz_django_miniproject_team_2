@@ -1,22 +1,22 @@
-from typing import Optional, Any
+from typing import Any, Optional
 
 from rest_framework import status
 from rest_framework.exceptions import (
     AuthenticationFailed,
     NotAuthenticated,
+    NotFound,
     PermissionDenied,
     ValidationError,
-    NotFound,
 )
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
 from core.utils.error_messages import (
-    VALIDATION_ERROR_MSG,
-    PERMISSION_DENIED_ERROR_MSG,
-    NOT_AUTHENTICATED_ERROR_MSG,
     AUTHENTICATION_FAILED_ERROR_MSG,
+    NOT_AUTHENTICATED_ERROR_MSG,
     NOT_FOUND_ERROR_MSG,
+    PERMISSION_DENIED_ERROR_MSG,
+    VALIDATION_ERROR_MSG,
 )
 
 

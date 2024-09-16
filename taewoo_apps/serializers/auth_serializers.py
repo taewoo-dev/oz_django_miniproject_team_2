@@ -38,9 +38,7 @@ class UserLoginSerializer(serializers.Serializer[Any]):
         user = authenticate(email=email, password=password)
 
         if user is None:
-            raise serializers.ValidationError("Invalid email or password.")
-        if not user.is_active:
-            raise serializers.ValidationError("This account is inactive.")
+            raise serializers.ValidationError("Invalid email or password or user is inactive")
 
         data["user"] = user
         return data

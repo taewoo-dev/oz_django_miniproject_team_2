@@ -45,7 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     )
     is_active = models.BooleanField(
         ("active"),
-        default=True,
+        default=False,
         help_text=("사용자가 활성상태로 처리될 지 여부를 지정합니다.(사용자를 삭제하지 않고 비활성화하려면 선택해제)"),
     )
 

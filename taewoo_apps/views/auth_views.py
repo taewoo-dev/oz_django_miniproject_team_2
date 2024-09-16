@@ -9,7 +9,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from taewoo_apps.serializers.auth_serializers import UserLoginSerializer, UserRegistrationSerializer
+from taewoo_apps.serializers.auth_serializers import (
+    UserLoginSerializer,
+    UserRegistrationSerializer,
+)
 from taewoo_apps.services.email_service import EmailService
 from taewoo_apps.services.token_service import TokenService
 from taewoo_apps.services.user_service import UserService

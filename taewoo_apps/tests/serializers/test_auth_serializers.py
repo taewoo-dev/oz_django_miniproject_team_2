@@ -1,8 +1,11 @@
+from django.contrib.auth import authenticate
 from django.test import TestCase
 from rest_framework.exceptions import ValidationError
 
-
-from taewoo_apps.serializers.auth_serializers import UserRegistrationSerializer, UserLoginSerializer
+from taewoo_apps.serializers.auth_serializers import (
+    UserLoginSerializer,
+    UserRegistrationSerializer,
+)
 from users.models import User
 
 
@@ -72,6 +75,14 @@ class UserLoginSerializerTest(TestCase):
             password="qwerasd!!",
             nickname="existing_nickname",
             phone_number="010-1234-1234",
+            is_active=True,  # 유저 생성 시 활성화 상태로 생성
+        )
+
+        self.inactive_user = User.objects.create_user(
+            email="test2@example.com",
+            password="qwerasd!!",  # 비밀번호는 create_user로 암호화됨
+            nickname="existing_nickname2",
+            phone_number="010-1234-1235",
         )
 
     def test_missing_email(self) -> None:
@@ -124,3 +135,15 @@ class UserLoginSerializerTest(TestCase):
         # Then
         self.assertTrue(is_valid)
         self.assertEqual(serializer.validated_data["user"], self.user)
+
+    def test_inactive_user(self) -> None:
+        # Given
+        valid_data = {
+            "email": "test2@example.com",
+            "password": "qwerasd!!",
+        }
+        serializer = UserLoginSerializer(data=valid_data)
+
+        # Except
+        with self.assertRaises(ValidationError):
+            serializer.is_valid(raise_exception=True)
