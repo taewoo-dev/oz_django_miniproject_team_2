@@ -35,14 +35,12 @@ class UserLoginSerializer(serializers.Serializer[Any]):
         email = data.get("email")
         password = data.get("password")
 
-        if email and password:
-            user = authenticate(email=email, password=password)
-            if user is None:
-                raise serializers.ValidationError("Invalid email or password.")
-            if not user.is_active:
-                raise serializers.ValidationError("This account is inactive.")
-        else:
-            raise serializers.ValidationError("Must include both email and password.")
+        user = authenticate(email=email, password=password)
+
+        if user is None:
+            raise serializers.ValidationError("Invalid email or password.")
+        if not user.is_active:
+            raise serializers.ValidationError("This account is inactive.")
 
         data["user"] = user
         return data
