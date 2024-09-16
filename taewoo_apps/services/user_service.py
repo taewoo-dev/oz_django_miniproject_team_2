@@ -6,8 +6,8 @@ from users.models import User
 class UserService:
 
     @staticmethod
-    def create_common_user_by_email(email: str, nickname: str, password: str) -> User:
-        return User.objects.create_user(email=email, nickname=nickname, password=password)
+    def create_common_user_by_email(email: str, nickname: str, password: str, phone_number: str) -> User:
+        return User.objects.create_user(email=email, nickname=nickname, password=password, phone_number=phone_number)
 
     @staticmethod
     def activate_user(user: User) -> None:

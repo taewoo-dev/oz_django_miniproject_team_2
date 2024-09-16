@@ -13,10 +13,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer[User]):
 
     class Meta:
         model = User
-        fields = ["email", "nickname", "password", "password2"]
+        fields = ["email", "nickname", "password", "password2", "phone_number"]
 
     def validate_email(self, email: str) -> str:
-        if User.objects.filter(email=email).exists():
+        if User.get_user_by_email(email=email):
             raise serializers.ValidationError("This email is already registered.")
         return email
 
@@ -35,14 +35,10 @@ class UserLoginSerializer(serializers.Serializer[Any]):
         email = data.get("email")
         password = data.get("password")
 
-        if email and password:
-            user = authenticate(email=email, password=password)
-            if user is None:
-                raise serializers.ValidationError("Invalid email or password.")
-            if not user.is_active:
-                raise serializers.ValidationError("This account is inactive.")
-        else:
-            raise serializers.ValidationError("Must include both email and password.")
+        user = authenticate(email=email, password=password)
+
+        if user is None:
+            raise serializers.ValidationError("Invalid email or password or user is inactive")
 
         data["user"] = user
         return data
