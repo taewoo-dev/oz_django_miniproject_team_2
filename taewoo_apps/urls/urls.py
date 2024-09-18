@@ -5,6 +5,7 @@ urlpatterns = []
 urlpatterns_api_v1 = [
     path("auth/", include("taewoo_apps.urls.auth_urls")),  # auth
     path("oauth/", include("taewoo_apps.urls.oauth_urls")),  # oauth
+    path("account/", include("taewoo_apps.urls.account_urls")),  # account
 ]
 
 urlpatterns += [
