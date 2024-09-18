@@ -14,7 +14,7 @@ class SocialCallBackSerializer(serializers.Serializer[Any]):
         """
         social service에 맞는 state 설정
         """
-        pass
+        ...
 
     def validate_state(self, state: str) -> str:
         # 추상 메서드를 통해 기대하는 state 값을 가져옴
