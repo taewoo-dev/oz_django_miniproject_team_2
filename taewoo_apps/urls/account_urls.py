@@ -4,7 +4,6 @@ from taewoo_apps.views.account_views import (
     AccountCreateAPIView,
     AccountListAPIView,
     AccountRetrieveAPIView,
-    AccountUpdateAPIView,
     AccountDestroyAPIView,
 )
 
@@ -15,7 +14,7 @@ urlpatterns_api_v1 = [
     path("new/", AccountCreateAPIView.as_view(), name="account_new"),
     path("", AccountListAPIView.as_view(), name="account_list"),
     path("<int:pk>/", AccountRetrieveAPIView.as_view(), name="account_detail"),
-    path("<int:pk>/edit/", AccountUpdateAPIView.as_view(), name="account_edit"),
+    # path("<int:pk>/edit/", AccountUpdateAPIView.as_view(), name="account_edit"),
     path("<int:pk>/delete/", AccountDestroyAPIView.as_view(), name="account_delete"),
 ]
 

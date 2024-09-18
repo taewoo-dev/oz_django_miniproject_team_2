@@ -8,6 +8,7 @@ from taewoo_apps.serializers.account_serializers import (
     AccountCreateSerializer,
     AccountListSerializer,
     AccountRetrieveSerializer,
+    AccountDestroySerializer,
 )
 
 
@@ -36,17 +37,11 @@ class AccountListAPIView(ListAPIView):
 
 
 class AccountRetrieveAPIView(RetrieveAPIView):
-    queryset = AccountRetrieveSerializer().get_optimized_queryset()
-    serializer_class = AccountRetrieveSerializer
-    permission_classes = [IsAuthenticated]
-
-
-class AccountUpdateAPIView(UpdateAPIView):
-    queryset = AccountRetrieveSerializer().get_optimized_queryset()
+    queryset = AccountRetrieveSerializer.get_optimized_queryset()
     serializer_class = AccountRetrieveSerializer
     permission_classes = [IsAuthenticated]
 
 
 class AccountDestroyAPIView(DestroyAPIView):
-    queryset = AccountRetrieveSerializer().get_optimized_queryset()
+    queryset = AccountDestroySerializer.get_optimized_queryset()
     permission_classes = [IsAuthenticated]

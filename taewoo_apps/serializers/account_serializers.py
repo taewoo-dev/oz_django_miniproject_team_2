@@ -47,7 +47,7 @@ class AccountRetrieveSerializer(serializers.ModelSerializer):
         return f"{int(instance.balance)}원"
 
 
-class AccountUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ["user", "account_number", "balance"]
+class AccountDestroySerializer(serializers.ModelSerializer):
+    @staticmethod
+    def get_optimized_queryset() -> QuerySet[Account]:
+        return Account.objects.all()
