@@ -9,7 +9,7 @@ class AccountSerializer(serializers.ModelSerializer[Account]):
 
     class Meta:
         model = Account
-        fields = ["id", "account_type", "balance"]
+        fields = ["id", "account_type"]
 
 
 class AccountCreateSerializer(serializers.ModelSerializer[Account]):
