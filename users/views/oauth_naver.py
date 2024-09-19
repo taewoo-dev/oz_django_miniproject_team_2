@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, AllowAny
 from rest_framework.views import APIView
 
-from config.local import NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
+from config.local import NAVER_CLIENT_ID, NAVER_SECRET
 from users.constants import NAVER_CALLBACK_URL, NAVER_STATE, NAVER_LOGIN_URL, NAVER_TOKEN_URL, NAVER_PROFILE_URL
 
 
@@ -41,7 +41,7 @@ class NaverCallbackView(APIView):
         code = request.GET.get("code")
         state = request.GET.get("state")
         client_id = NAVER_CLIENT_ID
-        client_secret = NAVER_CLIENT_SECRET
+        client_secret = NAVER_SECRET
         redirect_uri = request.build_absolute_uri(NAVER_CALLBACK_URL)
 
         token_url = NAVER_TOKEN_URL
