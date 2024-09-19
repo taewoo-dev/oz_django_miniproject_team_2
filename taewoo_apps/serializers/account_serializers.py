@@ -7,6 +7,13 @@ from accounts.models import Account
 from taewoo_apps.serializers.user_serializers import UserSerializer
 
 
+class AccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Account
+        fields = ["id", "account_type", "balance"]
+
+
 class AccountCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
