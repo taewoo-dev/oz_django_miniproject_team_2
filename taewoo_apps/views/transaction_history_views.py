@@ -17,6 +17,7 @@ class TransactionHistoryCreateAPIView(CreateAPIView):  # type: ignore
         account = serializer.validated_data["account"]
         transaction_amount = serializer.validated_data["transaction_amount"]
         transaction_type = serializer.validated_data["transaction_type"]
+        transaction_after_amount = serializer.validated_data["transaction_after_balance"]
         transaction_balance = 0
 
         # 출금일 경우
@@ -29,7 +30,9 @@ class TransactionHistoryCreateAPIView(CreateAPIView):  # type: ignore
         if transaction_type == "deposit":
             transaction_balance = account.balance + transaction_amount
 
+        transaction_after_balance = account.balance
         account.balance = transaction_balance
+
         account.save()
 
         serializer.save(transaction_balance=transaction_balance)

@@ -1,7 +1,7 @@
 from django.db.models import QuerySet
 from rest_framework import serializers
 
-from taewoo_apps.serializers.account_serializers import AccountSerializer
+from accounts.serializers import AccountSerializer
 from transaction_historys.models import TransactionHistory
 
 
