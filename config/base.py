@@ -101,7 +101,7 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME", "postgres"),
         "USER": os.environ.get("DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DB_PASSWORD", "postgres"),
-        "HOST": "localhost",  # 로컬에서 사용할 경우
+        "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": "5432",  # PostgreSQL 기본 포트
     }
 }
