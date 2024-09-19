@@ -8,7 +8,8 @@ media/
 .idea/
 .DS_Store
 # Environments
-.env
+.env.dev
+.env.prod
 .venv/
 venv/
 .python-version

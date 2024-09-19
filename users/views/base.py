@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -10,6 +10,7 @@ from users.serializers import LoginSerializer
 
 
 class LoginAPIView(GenericAPIView):  # type: ignore
+    permission_classes = [AllowAny]
     serializer_class = LoginSerializer
 
     def post(self, request: Request) -> Response:
@@ -28,12 +29,12 @@ class LoginAPIView(GenericAPIView):  # type: ignore
             key="access_token",
             value=str(refresh.access_token),  # type: ignore
             httponly=True,  # 자바스크립트 접근 불가
-            secure=True,  # HTTPS에서만 전송
+            secure=False,  # HTTPS에서만 전송
             samesite="Lax",  # CSRF 방지용
             max_age=3600,  # 1시간동안 쿠키 유지
         )
         # cookies에 refresh token 저장
-        response.set_cookie(key="refresh_token", value=str(refresh), httponly=True, secure=True, samesite="Lax")
+        response.set_cookie(key="refresh_token", value=str(refresh), httponly=True, secure=False, samesite="Lax")
         return response
         # return redirect("login_success")
 

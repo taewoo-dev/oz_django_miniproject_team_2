@@ -19,6 +19,7 @@ class TransactionHistoryCreateAPIView(CreateAPIView):  # type: ignore
         transaction_type = serializer.validated_data["transaction_type"]
         transaction_balance = 0
 
+
         # 출금일 경우
         if transaction_type == "withdrawal":
             if account.account_type == "deposit" and account.balance < transaction_amount:
