@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -34,6 +35,7 @@ class LoginAPIView(GenericAPIView):  # type: ignore
         # cookies에 refresh token 저장
         response.set_cookie(key="refresh_token", value=str(refresh), httponly=True, secure=True, samesite="Lax")
         return response
+        # return redirect("login_success")
 
 
 # 인증된 사용자만 접근할 수 있도록 하기 위해 필요
