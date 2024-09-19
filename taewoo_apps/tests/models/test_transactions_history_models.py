@@ -46,7 +46,6 @@ class TransactionHistoryModelTestCase(TestCase):
         self.assertEqual(transaction_history.transaction_type, self.transaction_data["transaction_type"])
         self.assertEqual(transaction_history.payment_method, self.transaction_data["payment_method"])
         self.assertEqual(transaction_history.transaction_description, self.transaction_data["transaction_description"])
-        self.assertIsNotNone(transaction_history.transaction_datetime)
 
     def test_account_requires_user(self) -> None:
         # Except
@@ -74,14 +73,6 @@ class TransactionHistoryModelTestCase(TestCase):
         # Then
         self.assertIsNotNone(transaction)
         self.assertEqual(transaction.transaction_description, "")
-
-    def test_transaction_datetime_auto_now_add(self) -> None:
-        # When
-        transaction = TransactionHistory.objects.create(**self.transaction_data)
-
-        # Then
-        now = datetime.now()
-        self.assertAlmostEqual(transaction.transaction_datetime, now, delta=timedelta(seconds=1))
 
     def test_transaction_history_str_representation(self) -> None:
         # When

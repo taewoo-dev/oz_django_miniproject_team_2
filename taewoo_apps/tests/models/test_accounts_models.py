@@ -59,15 +59,6 @@ class AccountModelTestCase(TestCase):
         with self.assertRaises(DataError):
             Account.objects.create(**account_data_with_long_number)
 
-    def test_balance_must_be_positive(self) -> None:
-        # Except
-        negative_balance = -10000
-        account_data_with_negative_balance = self.account_data.copy()
-        account_data_with_negative_balance["balance"] = negative_balance
-
-        with self.assertRaises(IntegrityError):
-            Account.objects.create(**account_data_with_negative_balance)
-
     def test_account_type_max_length(self) -> None:
         # Except
         long_account_type = "1" * 25

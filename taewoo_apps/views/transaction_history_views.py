@@ -3,7 +3,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
-from transaction_historys.serializers import (
+from taewoo_apps.serializers.transaction_history_serializers import (
     TransactionHistoryCreateSerializer,
     TransactionHistorySerializer,
 )

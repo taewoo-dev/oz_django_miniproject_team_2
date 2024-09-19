@@ -9,7 +9,7 @@ from rest_framework.generics import (
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
-from accounts.serializers import (
+from taewoo_apps.serializers.account_serializers import (
     AccountCreateSerializer,
     AccountDestroySerializer,
     AccountListSerializer,

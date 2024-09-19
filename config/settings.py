@@ -161,8 +161,8 @@ REST_FRAMEWORK = {
     # 커스텀 예외처리 setting
     "EXCEPTION_HANDLER": "core.utils.exception_handler.custom_exception_handler",
     # paginator settings
-    # "PAGE_SIZE": 10,
-    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     # simple jwt settings
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.BasicAuthentication",
