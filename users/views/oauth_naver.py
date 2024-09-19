@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.views import APIView
 
-from config.settings import NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
+from config.local import NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
 from users.constants import NAVER_CALLBACK_URL, NAVER_STATE, NAVER_LOGIN_URL, NAVER_TOKEN_URL, NAVER_PROFILE_URL
 
 User = get_user_model()
