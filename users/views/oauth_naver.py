@@ -4,11 +4,11 @@ import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model, login
 from django.shortcuts import redirect, render
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly, AllowAny
 from rest_framework.views import APIView
 
 from config.settings import NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
-from users.constants import NAVER_CALLBACK_URL, NAVER_STATE, NAVER_LOGIN_URL, NAVER_TOKEN_URL, NAVER_PROFILE_URL
+from config.settings import NAVER_CALLBACK_URL, NAVER_STATE, NAVER_LOGIN_URL, NAVER_TOKEN_URL, NAVER_PROFILE_URL
 
 User = get_user_model()
 
@@ -36,6 +36,7 @@ class NaverLoginView(APIView):
 
 
 class NaverCallbackView(APIView):
+    permission_classes = [AllowAny]
     def get(self, request):
         code = request.GET.get("code")
         state = request.GET.get("state")
@@ -56,7 +57,7 @@ class NaverCallbackView(APIView):
         token_json = token_response.json()
 
         if "access_token" not in token_json:
-            return render(request, "users/naver_failute.html", {"error": "access_token을 제대로 받아오지 못했습니다."})
+            return render(request, "users/naver_failure.html", {"error": "access_token을 제대로 받아오지 못했습니다."})
 
         access_token = token_json["access_token"]
 
@@ -76,7 +77,7 @@ class NaverCallbackView(APIView):
 
         # 사용자 정보 처리
         user, created = User.objects.get_or_create(
-            username=naver_user_info["id"],  # 네이버의 고유 ID로 사용자 식별
+            name=naver_user_info["id"],  # 네이버의 고유 ID로 사용자 식별
             defaults={
                 "email": naver_user_info.get("email"),
                 "nickname": naver_user_info.get("nickname"),

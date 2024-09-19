@@ -12,6 +12,7 @@ class TransactionHistoryCreateSerializer(serializers.ModelSerializer[Transaction
         fields = [
             "account",
             "transaction_amount",
+            "transaction_balance",
             "transaction_type",
             "payment_method",
             "transaction_description",
@@ -20,6 +21,7 @@ class TransactionHistoryCreateSerializer(serializers.ModelSerializer[Transaction
 
 class TransactionHistorySerializer(serializers.ModelSerializer[TransactionHistory]):
     account = AccountSerializer()
+
 
     class Meta:
         model = TransactionHistory
