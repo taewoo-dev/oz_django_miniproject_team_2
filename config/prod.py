@@ -2,7 +2,7 @@ from .local import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["3.38.117.147"]
 
 DATABASES = {
     "default": {
