@@ -20,18 +20,19 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # .env 파일 로드
-if os.getenv("DJANGO_ENV") == "production":
-    load_dotenv(os.path.join(BASE_DIR, ".env.prod"))
-else:
-    load_dotenv(os.path.join(BASE_DIR, ".env.dev"))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# 환경 변수로 민감한 정보 관리
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS: os.getenv("ALLOWED_HOSTS", "").split(",")
+# SECURITY WARNING: keep the secret key used in production secret!
+
+SECRET_KEY = "django-insecure--ni-ja8=#m3ykk#rtg176___3b2epdd%cd6d++#9x9uj_d$fw#"
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS: list[str] = []
 
 
 # Application definition
@@ -97,11 +98,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "HOST": os.getenv("DB_HOST", "localhost"), # Docker Compose에서 db 서비스로 연결-> 로컬에서 할거면 localhost하면 됨
-        "PORT": os.getenv("DB_PORT", "5432"),  # PostgreSQL 기본 포트
+        "NAME": os.environ.get("DB_NAME", "postgres"),
+        "USER": os.environ.get("DB_USER", "postgres"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "postgres"),
+        "HOST": "localhost",  # 로컬에서 사용할 경우
+        "PORT": "5432",  # PostgreSQL 기본 포트
     }
 }
 # Password validation
@@ -164,9 +165,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     # simple jwt settings
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-        # "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
@@ -184,12 +185,12 @@ SIMPLE_JWT = {
 }
 
 # Email settings
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# EMAIL_HOST = "smtp.naver.com"
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = os.getenv("EMAIL")
-# EMAIL_HOST_PASSWORD = os.getenv("PASSWORD")
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.naver.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv("EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("PASSWORD")
 
 # Oauth settings
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
@@ -200,12 +201,3 @@ KAKAO_SECRET = os.getenv("KAKAO_CLIENT_SECRET")
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-
-# OAuth-users
-NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
-NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
-NAVER_CALLBACK_URL = os.getenv("NAVER_CALLBACK_URL")
-NAVER_STATE = os.getenv("NAVER_STATE")
-NAVER_LOGIN_URL = os.getenv("NAVER_LOGIN_URL")
-NAVER_TOKEN_URL = os.getenv("NAVER_TOKEN_URL")
-NAVER_PROFILE_URL = os.getenv("NAVER_PROFILE_URL")
