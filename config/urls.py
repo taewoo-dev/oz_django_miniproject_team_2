@@ -23,6 +23,8 @@ from config.schema import schema_view
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/users/", include("users.urls")),
+    path("api/v1/accounts/", include("accounts.urls")),
+    path("api/v1/transactions/", include("transaction_historys.urls")),
     path("taewoo/", include("taewoo_apps.urls.urls")),
 ]
 

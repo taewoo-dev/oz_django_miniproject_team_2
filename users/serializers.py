@@ -73,3 +73,9 @@ class LoginSerializer(TokenObtainPairSerializer):
 #         # 예시: token['role'] = user.role
 #
 #         return token
+
+
+class UserSerializer(serializers.ModelSerializer["User"]):  # type: ignore
+    class Meta:
+        model = User
+        fields = ["id", "name"]

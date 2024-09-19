@@ -2,7 +2,10 @@ from django.db import models
 
 from accounts.models import Account
 from core.models import BaseModel
-from transaction_historys.constants import TRANSACTION_TYPE_CHOICES, PAYMENT_TYPE_CHOICES
+from transaction_historys.constants import (
+    PAYMENT_TYPE_CHOICES,
+    TRANSACTION_TYPE_CHOICES,
+)
 
 
 class TransactionHistory(BaseModel):

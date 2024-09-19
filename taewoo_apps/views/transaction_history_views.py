@@ -9,11 +9,11 @@ from taewoo_apps.serializers.transaction_history_serializers import (
 )
 
 
-class TransactionHistoryCreateAPIView(CreateAPIView):
+class TransactionHistoryCreateAPIView(CreateAPIView):  # type: ignore
     serializer_class = TransactionHistoryCreateSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer) -> None:  # type: ignore
         account = serializer.validated_data["account"]
         transaction_amount = serializer.validated_data["transaction_amount"]
         transaction_type = serializer.validated_data["transaction_type"]
@@ -35,14 +35,14 @@ class TransactionHistoryCreateAPIView(CreateAPIView):
         serializer.save(transaction_balance=transaction_balance)
 
 
-class TransactionHistoryListAPIView(ListAPIView):
+class TransactionHistoryListAPIView(ListAPIView):  # type: ignore
     queryset = TransactionHistorySerializer.get_optimized_queryset()
     serializer_class = TransactionHistorySerializer
     permission_classes = [IsAuthenticated]
     pagination_class = LimitOffsetPagination
 
 
-class TransactionHistoryRetrieveAPIView(RetrieveAPIView):
+class TransactionHistoryRetrieveAPIView(RetrieveAPIView):  # type: ignore
     queryset = TransactionHistorySerializer.get_optimized_queryset()
     serializer_class = TransactionHistorySerializer
     permission_classes = [IsAuthenticated]

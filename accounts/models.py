@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from accounts.constants import BANK_CODE_CHOICES, ACCOUNT_TYPE_CHOICES
+from accounts.constants import ACCOUNT_TYPE_CHOICES, BANK_CODE_CHOICES
 from core.models import BaseModel
 
 User = get_user_model()

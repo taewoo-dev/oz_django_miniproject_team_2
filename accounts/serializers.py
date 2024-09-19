@@ -2,7 +2,7 @@ from django.db.models import QuerySet
 from rest_framework import serializers
 
 from accounts.models import Account
-from taewoo_apps.serializers.user_serializers import UserSerializer
+from users.serializers import UserSerializer
 
 
 class AccountSerializer(serializers.ModelSerializer[Account]):
