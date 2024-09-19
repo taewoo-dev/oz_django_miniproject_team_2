@@ -1,5 +1,4 @@
 from typing import Any
-
 from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -8,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
 User = get_user_model()
-
 
 # 이메일 인증 확인하는 로직(GenericAPIView or APIView)
 class EmailVerificationView(GenericAPIView):  # type: ignore
