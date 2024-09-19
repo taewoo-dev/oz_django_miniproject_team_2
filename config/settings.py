@@ -26,7 +26,8 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ymr=3u3(zk*7e098o!y@m($@q*kks6$^zi2&guz!tl*uwi-1%n"
+
+SECRET_KEY = "django-insecure--ni-ja8=#m3ykk#rtg176___3b2epdd%cd6d++#9x9uj_d$fw#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,6 +49,7 @@ OWN_APPS = [
     "users",
     "accounts",
     "transaction_historys",
+    "core",
     "taewoo_apps",
 ]
 THIRD_PARTY_APPS = [
@@ -157,7 +159,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.BrowsableAPIRenderer",
     ),
     # 커스텀 예외처리 setting
-    "EXCEPTION_HANDLER": "core.utils.exexception_handler.custom_exception_handler",
+    "EXCEPTION_HANDLER": "core.utils.exception_handler.custom_exception_handler",
     # paginator settings
     # "PAGE_SIZE": 10,
     # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
@@ -199,3 +201,8 @@ KAKAO_SECRET = os.getenv("KAKAO_CLIENT_SECRET")
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+
+# OAuth-users
+NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET")
+

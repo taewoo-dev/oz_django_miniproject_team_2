@@ -1,15 +1,19 @@
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from users.serializers import SignupSerializer
+from users.serializers import SignupSerializer, User
 from users.utils.email_utils import send_verification_email
 
 
 class SignUpAPIView(GenericAPIView):  # type: ignore
+    queryset = User.objects.all()
+    permission_classes = [AllowAny]
+
     serializer_class = SignupSerializer
 
     def post(self, request: Request) -> Response:
